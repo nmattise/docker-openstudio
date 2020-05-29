@@ -68,7 +68,7 @@ RUN gem install bundler -v $OS_BUNDLER_VERSION && \
     cp /usr/local/openstudio-${OPENSTUDIO_VERSION}${OPENSTUDIO_VERSION_EXT}/Ruby/Gemfile /var/oscli/ && \
     cp /usr/local/openstudio-${OPENSTUDIO_VERSION}${OPENSTUDIO_VERSION_EXT}/Ruby/Gemfile.lock /var/oscli/ && \
     cp /usr/local/openstudio-${OPENSTUDIO_VERSION}${OPENSTUDIO_VERSION_EXT}/Ruby/openstudio-gems.gemspec /var/oscli/
-RUN gem install openstudio-standards -v 0.2.11 -N
+
 WORKDIR /var/oscli
 RUN bundle _${OS_BUNDLER_VERSION}_ install --path=gems --without=native_ext --jobs=4 --retry=3
 
@@ -79,5 +79,7 @@ RUN openstudio --verbose --bundle /var/oscli/Gemfile --bundle_path /var/oscli/ge
 
 # May need this for syscalls that do not have ext in path
 RUN ln -s /usr/local/openstudio-${OPENSTUDIO_VERSION}${OPENSTUDIO_VERSION_EXT} /usr/local/openstudio-${OPENSTUDIO_VERSION}
+
+RUN gem install openstudio-standards -v 0.2.11 -N
 
 CMD [ "/bin/bash" ]
